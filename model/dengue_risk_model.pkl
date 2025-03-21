@@ -1,0 +1,25 @@
+# predict.py
+import joblib
+import pandas as pd
+
+# Load the trained model
+model = joblib.load("models/dengue_risk_model.pkl")
+
+# Example input data (replace with actual user input or real-time data)
+input_data = {
+    "Rainfall": 120.5,  # Rainfall in mm
+    "Temperature": 28.3,  # Temperature in °C
+    "Humidity": 85.0,  # Humidity in %
+    "Vegetation_Index": 0.65  # Vegetation index (0 to 1)
+}
+
+# Convert input data to DataFrame
+input_df = pd.DataFrame([input_data])
+
+# Make prediction
+prediction = model.predict(input_df)
+prediction_proba = model.predict_proba(input_df)
+
+# Display results
+print("Prediction:", "High Risk" if prediction[0] == 1 else "Low Risk")
+print("Probability of Outbreak:", prediction_proba[0][1])
